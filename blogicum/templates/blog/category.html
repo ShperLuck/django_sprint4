@@ -1,0 +1,21 @@
+{% extends "base.html" %}  <!-- Подключаем базовый шаблон base.html, чтобы не писать всё с нуля -->
+
+{% block title %}  <!-- Блок для заголовка страницы -->
+  Публикации в категории {{ category.title }}  <!-- Заголовок с названием категории -->
+{% endblock %}
+
+{% block content %}  <!-- Основной блок контента -->
+  <h1 class="text-center">Публикации в категории - {{ category.title }}</h1>  <!-- Заголовок с названием категории, text-center - это Bootstrap для выравнивания -->
+  <p class="col-6 offset-3 mb-5 lead text-center">{{ category.description }}</p>  <!-- Описание категории, col-6 offset-3 - ширина и отступы от Bootstrap, lead - большой текст -->
+  
+  {% for post in page_obj %}  <!-- Цикл по постам из объекта пагинации -->
+    <article class="mb-5">  <!-- Каждый пост в теге article, mb-5 - отступ снизу от Bootstrap -->
+      {% include "includes/post_card.html" %}  <!-- Подключаем шаблон post_card.html для карточки поста -->
+    </article>   
+  {% endfor %}
+  
+  {% include "includes/paginator.html" %}  <!-- Подключаем шаблон для пагинации, чтобы листать страницы -->
+{% endblock %}
+
+<!-- из view в blog/views.py -->
+<!-- просто вставляет другой шаблон -->
