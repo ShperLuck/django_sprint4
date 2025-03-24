@@ -1,0 +1,42 @@
+{% extends "base.html" %}  <!-- Подключаем базовый шаблон для общего дизайна -->
+
+{% block title %}  <!-- Блок для заголовка страницы -->
+  Страница пользователя {{ profile }}  <!-- Показываем имя профиля -->
+{% endblock %}
+
+{% block content %}  <!-- Основной блок контента -->
+  <h1 class="mb-5 text-center">Страница пользователя {{ profile }}</h1>  <!-- Заголовок с именем, mb-5 - отступ, text-center - центрирование -->
+  <small>  <!-- Мелкий текст для инфы -->
+    <ul class="list-group list-group-horizontal justify-content-center mb-3">  <!-- Список Bootstrap, горизонтальный и центрированный -->
+      <li class="list-group-item text-muted">Имя пользователя:  <!-- Элемент списка с именем -->
+        {% if profile.get_full_name %}  <!-- Если есть полное имя -->
+          {{ profile.get_full_name }}  <!-- Показываем его -->
+        {% else %}
+          не указано  <!-- Иначе пишем это -->
+        {% endif %}</li>
+      <li class="list-group-item text-muted">Регистрация: {{ profile.date_joined }}</li>  <!-- Дата регистрации -->
+      <li class="list-group-item text-muted">Роль:  <!-- Роль юзера -->
+        {% if profile.is_staff %}  <!-- Если админ -->
+          Админ
+        {% else %}
+          Пользователь  <!-- Иначе обычный юзер -->
+        {% endif %}</li>
+    </ul>
+    <ul class="list-group list-group-horizontal justify-content-center">  <!-- Ещё список для кнопок -->
+      {% if user.is_authenticated and request.user == profile %}  <!-- Если юзер залогинен и это его профиль -->
+        <a class="btn btn-sm text-muted" href="{% url 'blog:edit_profile' profile.username %}">Редактировать профиль</a>  <!-- Ссылка на редактирование -->
+        <a class="btn btn-sm text-muted" href="{% url 'password_change' %}">Изменить пароль</a>  <!-- Ссылка на смену пароля -->
+      {% endif %}
+    </ul>
+  </small>
+  <br>  <!-- Перенос строки -->
+  <h3 class="mb-5 text-center">Публикации пользователя</h3>  <!-- Заголовок для постов -->
+  {% for post in page_obj %}  <!-- Цикл по постам из пагинации -->
+    <article class="mb-5">  <!-- Каждый пост в article, mb-5 - отступ -->
+      {% include "includes/post_card.html" %}  <!-- Подключаем шаблон карточки поста -->
+    </article>
+  {% endfor %}
+  {% include "includes/paginator.html" %}  <!-- Подключаем пагинацию -->
+{% endblock %}
+
+<!--  из view через context -->
