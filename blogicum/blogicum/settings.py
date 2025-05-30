@@ -1,128 +1,104 @@
-from pathlib import Path  # Модуль для работы с путями к файлам
+from pathlib import Path
 
-# Базовая папка проекта
-BASE_DIR = Path(__file__).resolve().parent.parent  # Путь к корню проекта от этого файла
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Настройки для разработки
 SECRET_KEY = (
     'django-insecure-fBMpGr7bc7BxZoqCKwHeMivKiJ_UiHg0LSDgbFzfz-JFm5fbqc'
-)  # Ключ для шифрования, на продакшене надо менять
+)
 
-DEBUG = True  # Режим отладки, показывает ошибки в браузере
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost',  # Локальный хост
-    '127.0.0.1',  # IP для локалки
-]  # Где сайт работает
-
-
-# Приложения проекта
-INSTALLED_APPS = [
-    'django_bootstrap5',  # Bootstrap для стилей
-    'blog.apps.BlogConfig',  # Наше приложение blog
-    'pages.apps.PagesConfig',  # Приложение для страниц
-    'core.apps.CoreConfig',  # Базовое приложение
-    'users.apps.UsersConfig',  # Приложение с юзерами
-    'django.contrib.admin',  # Админка
-    'django.contrib.auth',  # Авторизация
-    'django.contrib.contenttypes',  # Связь моделей
-    'django.contrib.sessions',  # Сессии
-    'django.contrib.messages',  # Сообщения
-    'django.contrib.staticfiles',  # Статические файлы
-    'debug_toolbar',  # Панель отладки
+    'localhost',
+    '127.0.0.1',
 ]
 
+INSTALLED_APPS = [
+    'django_bootstrap5',
+    'blog.apps.BlogConfig',
+    'pages.apps.PagesConfig',
+    'core.apps.CoreConfig',
+    'users.apps.UsersConfig',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'debug_toolbar',
+]
 
-# Middleware - обработка запросов
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',  # Безопасность
-    'django.contrib.sessions.middleware.SessionMiddleware',  # Сессии
-    'django.middleware.common.CommonMiddleware',  # Общие штуки
-    'django.middleware.csrf.CsrfViewMiddleware',  # Защита от CSRF
-    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Кто залогинен
-    'django.contrib.messages.middleware.MessageMiddleware',  # Сообщения
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Защита от кликов
-    'debug_toolbar.middleware.DebugToolbarMiddleware',  # Отладка
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 INTERNAL_IPS = [
-    '127.0.0.1',  # IP для debug_toolbar
+    '127.0.0.1',
 ]
 
-POSTS_PER_PAGE = 5  # Сколько постов на странице
+POSTS_PER_PAGE = 10  # Унифицируем лимит постов на странице
 
-ROOT_URLCONF = 'blogicum.urls'  # Главный файл с URL
+ROOT_URLCONF = 'blogicum.urls'
 
-# Папка с шаблонами
-TEMPLATES_DIR = BASE_DIR / 'templates'  # Путь к templates
+TEMPLATES_DIR = BASE_DIR / 'templates'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Движок шаблонов
-        'DIRS': [TEMPLATES_DIR],  # Где искать шаблоны
-        'APP_DIRS': True,  # Искать в приложениях
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [TEMPLATES_DIR],
+        'APP_DIRS': True,
         'OPTIONS': {
-            'context_processors': [  # Добавляют данные в шаблоны
-                'django.template.context_processors.debug',  # Отладка
-                'django.template.context_processors.request',  # Request
-                'django.contrib.auth.context_processors.auth',  # Юзер
-                'django.contrib.messages.context_processors.messages',  # Сообщения
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'blogicum.wsgi.application'  # Файл для сервера
+WSGI_APPLICATION = 'blogicum.wsgi.application'
 
-
-# База данных
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # SQLite для разработки
-        'NAME': BASE_DIR / 'db.sqlite3',  # Путь к базе
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-
-# Проверка паролей
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},  # Не похож на имя
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},  # Минимальная длина
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},  # Не простой
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},  # Не только цифры
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+LANGUAGE_CODE = 'ru-RU'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
 
-# Язык и время
-LANGUAGE_CODE = 'ru-RU'  # Русский язык
-TIME_ZONE = 'UTC'  # Часовой пояс
-USE_I18N = True  # Поддержка языков
-USE_L10N = True  # Локализация
-USE_TZ = True  # Часовые пояса
-
-
-# Статические файлы
-STATIC_URL = '/static/'  # URL для CSS и JS
-
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static_dev',  # Папка для статичных файлов
+    BASE_DIR / 'static_dev',
 ]
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  # Тип ID в моделях
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Свои настройки (добавили сами):
-CSRF_FAILURE_VIEW = 'pages.views.csrf_failure'  # Страница ошибки CSRF
-
-AUTH_USER_MODEL = 'users.MyUser'  # Наша модель юзера
-
-LOGIN_REDIRECT_URL = 'blog:index'  # Куда после логина
-
-MEDIA_ROOT = BASE_DIR / 'media'  # Папка для файлов юзеров
-
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'  # Письма в файлы
-EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'  # Куда сохранять письма
-
-LOGIN_URL = 'login'  # Страница логина
-
-LIMIT_POSTS = 10  # Лимит постов на странице
+CSRF_FAILURE_VIEW = 'pages.views.csrf_failure'
+AUTH_USER_MODEL = 'users.MyUser'
+LOGIN_REDIRECT_URL = 'blog:index'
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+LOGIN_URL = 'login'
