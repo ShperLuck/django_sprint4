@@ -1,0 +1,48 @@
+{% load static %}  <!-- Загружаем тег static для работы с файлами вроде картинок -->
+
+<header>  <!-- Шапка сайта -->
+  <nav class="navbar navbar-light" style="background-color: lightskyblue">  <!-- Навигация Bootstrap, светлая с цветом -->
+    <div class="container">  <!-- Контейнер Bootstrap для выравнивания -->
+      <a class="navbar-brand" href="{% url 'blog:index' %}">  <!-- Логотип и ссылка на главную -->
+        <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">  <!-- Картинка логотипа -->
+        Блогикум  <!-- Название сайта -->
+      </a>
+      {% with request.resolver_match.view_name as view_name %}  <!-- Сохраняем имя текущего view в переменную -->
+        <ul class="nav nav-pills">  <!-- Список ссылок Bootstrap, nav-pills - стиль кнопок -->
+          <li class="nav-item">  <!-- Элемент списка -->
+            <a class="nav-link {% if view_name == 'pages:about' %} text-white {% endif %}" href="{% url 'pages:about' %}">  <!-- Ссылка на "О проекте" -->
+              О проекте  <!-- Текст ссылки, text-white если это текущая страница -->
+            </a>
+          </li>
+          <li class="nav-item">  <!-- Ещё элемент -->
+            <a class="nav-link {% if view_name == 'pages:rules' %} text-white {% endif %}" href="{% url 'pages:rules' %}">  <!-- Ссылка на "Правила" -->
+              Правила
+            </a>
+          </li>
+          {% if user.is_authenticated %}  <!-- Если юзер залогинен -->
+            <div class="btn-group" role="group" aria-label="Basic outlined example">  <!-- Группа кнопок Bootstrap -->
+              <button type="button" class="btn btn-outline-primary">  <!-- Кнопка -->
+                <a class="text-decoration-none text-reset" href="{% url 'blog:create_post' %}">Написать пост</a>  <!-- Ссылка внутри -->
+              </button>
+              <button type="button" class="btn btn-outline-primary">  <!-- Кнопка профиля -->
+                <a class="text-decoration-none text-reset" href="{% url 'blog:profile' user.username %}">{{ user.username }}</a>  <!-- Имя юзера -->
+              </button>
+              <button type="button" class="btn btn-outline-primary">  <!-- Кнопка выхода -->
+                <a class="text-decoration-none text-reset" href="{% url 'logout' %}">Выйти</a>
+              </button>
+            </div>
+          {% else %}  <!-- Если не залогинен -->
+            <div class="btn-group" role="group" aria-label="Basic outlined example">  <!-- Группа кнопок -->
+              <button type="button" class="btn btn-outline-primary">  <!-- Кнопка входа -->
+                <a class="text-decoration-none text-reset" href="{% url 'login' %}">Войти</a>
+              </button>
+              <button type="button" class="btn btn-outline-primary">  <!-- Кнопка регистрации -->
+                <a class="text-decoration-none text-reset" href="{% url 'registration' %}">Регистрация</a>
+              </button>
+            </div>
+          {% endif %}
+        </ul>
+      {% endwith %}  <!-- Закрываем with -->
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,30 @@
+{% load static %}  <!-- Загружаем штуку для работы со статическими файлами, типа картинок -->
+{% load django_bootstrap5 %}  <!-- Загружаем Bootstrap, чтобы стили были красивые -->
+
+<!DOCTYPE html>  <!-- Говорим, что это HTML5 -->
+<html lang="ru">  <!-- Указываем, что язык русский -->
+  <head>  <!-- Тут всё, что в голове страницы -->
+    <meta charset="utf-8">  <!-- Кодировка, чтобы русские буквы нормально показывались -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">  <!-- Чтобы страница нормально выглядела на телефоне -->
+    <link rel="icon" href="{% static 'img/fav/favicon.ico' %}" type="image">  <!-- Иконка для вкладки в браузере -->
+    <link rel="apple-touch-icon" href="{% static 'img/fav/apple-touch-icon.png' %}">  <!-- Иконка для Apple-устройств -->
+    <link rel="icon" type="image/png" href="{% static 'img/fav/favicon-32x32.png' %}">  <!-- Иконка побольше -->
+    <link rel="icon" type="image/png" href="{% static 'img/fav/favicon-16x16.png' %}">  <!-- Иконка поменьше -->
+    <title>  <!-- Заголовок страницы вверху браузера -->
+      {% block title %}{% endblock %}  <!-- Место, куда другие страницы будут вставлять свой заголовок -->
+    </title>
+    {% bootstrap_css %}  <!-- Подключаем стили Bootstrap -->
+  </head>
+  <body>  <!-- Тут всё, что видно на странице -->
+    {% include "includes/header.html" %}  <!-- Вставляем хедер, это верхняя часть страницы -->
+    <main>  <!-- Основная часть страницы -->
+      <div class="container">  <!-- Контейнер, чтобы всё было аккуратно и с отступами -->
+        {% block content %}{% endblock %}  <!-- Место, куда другие страницы будут вставлять свой контент -->
+      </div>
+    </main>
+    {% include "includes/footer.html" %}  <!-- Вставляем футер, это нижняя часть страницы -->
+  </body>
+</html>
+
+
+<!-- viewport -->
